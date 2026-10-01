@@ -20,15 +20,32 @@ class StorefrontFlowTest extends TestCase
             'email' => 'maria@example.com',
             'password' => 'moda-segura-2026',
             'password_confirmation' => 'moda-segura-2026',
+            'role' => User::ROLE_ADMIN,
         ])->assertRedirect(route('home'));
 
         $this->assertAuthenticated();
-        $this->assertDatabaseHas('users', ['email' => 'maria@example.com']);
+        $this->assertDatabaseHas('users', [
+            'email' => 'maria@example.com',
+            'role' => User::ROLE_CLIENT,
+        ]);
         $this->get(route('account'))->assertOk()->assertSee('Mis pedidos');
+    }
+
+    public function test_first_visit_offers_sign_in_or_registration_and_protects_the_store(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Iniciar sesión')
+            ->assertSee('Crear cuenta');
+
+        $this->get(route('products.index'))->assertRedirect(route('login'));
+        $this->get(route('cart.index'))->assertRedirect(route('login'));
+        $this->get(route('compare.index'))->assertRedirect(route('login'));
     }
 
     public function test_cart_requires_and_keeps_the_selected_product_variants(): void
     {
+        $this->actingAs(User::factory()->create());
         $category = Category::create(['name' => 'Hombre', 'slug' => 'hombre']);
         $product = Product::create([
             'category_id' => $category->id,

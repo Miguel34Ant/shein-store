@@ -44,6 +44,12 @@
    <a class="icon-link account-link" href="{{ auth()->check() ? route('account') : route('login') }}" aria-label="Mi cuenta">
 	 <span aria-hidden="true">♙</span><small>{{ auth()->check() ? auth()->user()->name : 'Ingresar' }}</small>
 	</a>
+   @auth
+      @if(auth()->user()->isAdmin())
+         <a class="icon-link" href="{{ route('admin.dashboard') }}" aria-label="Administración"><span aria-hidden="true">⚙</span><small>Admin</small></a>
+      @endif
+   @endauth
+   <a class="icon-link compare-link" href="{{ route('compare.index') }}" aria-label="Comparar productos"><span aria-hidden="true">⇄</span><small>Comparar {{ count(session('compare_products', [])) ?: '' }}</small></a>
 	<a class="icon-link bag-link" href="{{ route('cart.index') }}" aria-label="Ver carrito"><span aria-hidden="true">♧</span><small>Carrito</small></a>
    </div>
   </div>

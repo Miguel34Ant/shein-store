@@ -27,5 +27,9 @@
 		@if($productColors->isNotEmpty())
 			<div class="product-tile__options"><span class="swatch-dots" aria-hidden="true"><i></i>@if($productColors->count() > 1)<i></i>@endif</span>{{ $productColors->count() }} {{ $productColors->count() === 1 ? 'color' : 'colores' }}</div>
 		@endif
+		<form class="compare-action" method="POST" action="{{ route('compare.add', $product) }}">
+			@csrf
+			<button type="submit">+ Comparar</button>
+		</form>
 	</div>
 </article>

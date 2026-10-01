@@ -48,6 +48,7 @@ class ProductController extends Controller
  public function show(string $slug)
  {
         $product = Product::with(['mainImage', 'images', 'category'])
+            ->where('is_active', true)
             ->where('slug', $slug)
             ->firstOrFail();
 

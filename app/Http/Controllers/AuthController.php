@@ -47,7 +47,9 @@ class AuthController extends Controller
         $this->mergeGuestCart($guestCart, Auth::user());
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home'));
+        $destination = Auth::user()->isAdmin() ? 'admin.dashboard' : 'home';
+
+        return redirect()->intended(route($destination));
     }
 
     public function register(Request $request)
@@ -59,11 +61,12 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', Password::min(8)],
         ]);
 
-        $user = User::create([
+        $user = new User([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $user->forceFill(['role' => User::ROLE_CLIENT])->save();
 
         Auth::login($user);
         $this->mergeGuestCart($guestCart, $user);

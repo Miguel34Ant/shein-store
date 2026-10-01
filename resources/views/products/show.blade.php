@@ -69,6 +69,11 @@
 			<div class="product-stock"><strong>Envío disponible</strong> · Devoluciones fáciles · Pago seguro</div>
 			<div class="product-add"><button class="button-coral" type="submit">Añadir a la cesta <span aria-hidden="true">→</span></button></div>
 		</form>
+		<form class="compare-detail" method="POST" action="{{ route('compare.add', $product) }}">
+			@csrf
+			<button type="submit">+ Añadir a comparación</button>
+		</form>
+		@error('compare')<p class="field-error">{{ $message }}</p>@enderror
 		<div class="shipping-note">Entrega estimada en 5–10 días hábiles<br>Compra protegida · Atención al cliente todos los días</div>
 	</section>
 </div>

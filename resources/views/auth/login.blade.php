@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Ingresar | Prisma Studio')
+@section('title', 'Iniciar sesión | Prisma Studio')
 
 @section('content')
 <div class="auth-wrap">
     <section class="auth-panel">
-        <h1>Qué bueno verte.</h1>
-        <p>Ingresa a tu cuenta para continuar comprando.</p>
+        <h1>Iniciar sesión</h1>
+        <p>Ingresa el correo electrónico y la contraseña de tu cuenta.</p>
         <form method="POST" action="{{ route('login.submit') }}">
             @csrf
             <div class="form-field">
@@ -20,7 +20,7 @@
                 @error('password')<span class="field-error">{{ $message }}</span>@enderror
             </div>
             <label style="display: flex; align-items: center; gap: 8px; color: #666; font-size: 12px"><input type="checkbox" name="remember" value="1"> Mantener mi sesión iniciada</label>
-            <button type="submit" class="button-dark">Ingresar</button>
+            <button type="submit" class="button-dark">Iniciar sesión</button>
         </form>
         <div class="auth-switch">¿Aún no tienes cuenta? <a href="{{ route('register') }}">Crear cuenta</a></div>
     </section>

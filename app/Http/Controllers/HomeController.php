@@ -10,6 +10,10 @@ class HomeController extends Controller
 {
  public function index()
  {
+ if (! auth()->check()) {
+ return view('auth.entry');
+ }
+
  $categories = Category::all();
 		$products = Product::with('mainImage')->where('is_active', true)
  ->latest()

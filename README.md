@@ -57,3 +57,14 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Cuenta de administrador
+
+Las cuentas creadas desde el registro reciben el rol de cliente. Para preparar la primera cuenta administradora, configura `ADMIN_NAME`, `ADMIN_EMAIL` y `ADMIN_PASSWORD` en `.env` y ejecuta:
+
+```bash
+php artisan migrate
+php artisan db:seed --class=AdminUserSeeder
+```
+
+El panel está disponible en `/admin`. Solo las cuentas con rol `admin` pueden gestionar productos, categorías y usuarios. Eliminar un usuario también elimina sus pedidos asociados.
